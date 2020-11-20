@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import Button from '@material-ui/core/Button'
 import useSelect from '../hooks/useSelect'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,6 +76,10 @@ const Formulario = ({ setCategoria }) => {
       </Grid>
     </div>
   )
+}
+
+Formulario.propTypes = {
+  setCategoria: PropTypes.func.isRequired,
 }
 
 export default Formulario

@@ -60,6 +60,8 @@ const Noticia = ({ noticia }) => {
   )
 }
 
-Noticia.propTypes = {}
+Noticia.propTypes = {
+  noticia: PropTypes.object.isRequired,
+}
 
 export default Noticia
