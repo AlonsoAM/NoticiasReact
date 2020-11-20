@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import Container from '@material-ui/core/Container'
+import { useEffect, useState } from 'react'
+import Formulario from './components/Formulario'
+import Header from './components/Header'
+import axios from 'axios'
+import ListadoNoticias from './components/ListadoNoticias'
 
 function App() {
+  // Definir la categoría y noticias
+  const [categoria, setCategoria] = useState('')
+  const [noticias, setNoticias] = useState([])
+
+  useEffect(() => {
+    const key = '310500c4437e4dbab219b024e6af765f'
+    const url = `http://newsapi.org/v2/top-headlines?country=mx&category=${categoria}&apiKey=${key}`
+
+    const consultarAPI = async () => {
+      try {
+        const noticias = await axios.get(url)
+        setNoticias(noticias.data.articles)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    consultarAPI()
+  }, [categoria])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Header titulo="Buscador de Noticias" />
+      <Container maxWidth="md">
+        <Formulario setCategoria={setCategoria} />
+        <ListadoNoticias noticias={noticias} />
+      </Container>
+    </>
+  )
 }
 
-export default App;
+export default App
